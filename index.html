@@ -1,0 +1,69 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Aprendendo TDD na prática</title>
+    <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-1.18.0.css">
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+</head>
+
+<body>
+    <div id='main' style='padding: 2em;'>
+        <h1>Calculadora de troco de uma máquina de venda</h1>
+        <h2>Calcule o troco de acordo com o preço do produto e dinheiro recebido</h2>
+    </div>
+    <div id="qunit"></div>
+    <div id="qunit-fixture"></div>
+    <script src="https://code.jquery.com/qunit/qunit-1.18.0.js"></script>
+
+    <script>
+        // A sua solução será escrita aqui!
+        const cedulasDisponiveis = [100, 50, 20, 10, 5, 2, 1]
+        function calcularTroco(precoDoProduto, valorPago) {
+            let troco = []
+            // o seu código com a solução será escrito aqui
+
+            var valorTroco = valorPago - precoDoProduto
+            
+
+            for (var i = 0; i < cedulasDisponiveis.length; i++) {
+                var cedula = cedulasDisponiveis[i]
+                
+                if (valorTroco >= cedula) {
+                    var qtd = Number.parseInt(valorTroco / cedula)
+                    valorTroco -= cedula * qtd
+                    for (var j = 0; j < qtd; j++)
+                        troco.push(cedula)
+                }
+
+            }
+            return troco
+        }
+    </script>
+
+    <script>
+        test('calcularTroco(1,1) deve retornar [] - Um array vazio', (assert) => {
+            const trocoCalculado = calcularTroco(1, 1) // Sem troco, apenas um array vazio
+            const trocoEsperado = []
+            assert.deepEqual(trocoCalculado, trocoEsperado) // 'deepEqual' usado para comparar arrays, veja mais em https://api.qunitjs.com/assert/deepEqual/
+        })
+        test('calcularTroco(215, 300) deve retornar [50, 20, 10, 5]', (assert) => {
+            const trocoCalculado = calcularTroco(215, 300) // Esperado um array contendo [50, 20, 10, 5]
+            const trocoEsperado = [50, 20, 10, 5]
+            assert.deepEqual(trocoCalculado, trocoEsperado)
+        })
+        test('calcularTroco(486, 600) deve retornar [100, 10, 2, 2]', (assert) => {
+            const trocoCalculado = calcularTroco(486, 600)
+            const trocoEsperado = [100, 10, 2, 2]
+            assert.deepEqual(trocoCalculado, trocoEsperado)
+        })
+        test('calcularTroco(12, 200) deve retornar [100, 50, 20, 10, 5, 2, 1]', (assert) => {
+            const trocoCalculado = calcularTroco(12, 200)
+            const trocoEsperado = [100, 50, 20, 10, 5, 2, 1]
+            assert.deepEqual(trocoCalculado, trocoEsperado)
+        })
+    </script>
+
+</body>
+
+</html>
